@@ -1,13 +1,13 @@
 <template>
   <div>
     <h2 class="container">Login</h2><br>
-    <form id="form-login" class="container" @submit.prevent="login">
+    <form id="form-login" class="container">
         <div class="form-group">
           <input
             type="email"
             class="form-control"
-            v-model="email_login"
             placeholder="Type an email"
+            v-model="email"
             required
           />
         </div>
@@ -15,22 +15,33 @@
           <input
             type="password"
             class="form-control"
-            v-model="password_login"
             placeholder="Type password"
+            v-model="password"
             required
           />
         </div>
-        <button type="submit" class="btn btn-dark w-20">Login</button>
+        <button type="submit" class="btn btn-dark w-20" @click="login">Login</button>
       </form>
-      <div class="container">
-        <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin>
-      </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    login () {
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password
+      })
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 
