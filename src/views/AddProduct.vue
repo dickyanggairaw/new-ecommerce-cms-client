@@ -17,12 +17,14 @@
         <label>Stock</label>
         <input type="number" class="form-control" v-model="stock">
       </div>
-      <button type="submit" class="btn btn-primary" @click="addProduct">Submit</button>
+      <button type="submit" class="btn btn-primary" @click.prevent="addProduct">Submit</button>
     </form>
   </div>
 </template>
 
 <script>
+import swal from 'sweetalert'
+
 export default {
   data () {
     return {
@@ -41,6 +43,18 @@ export default {
         stock: this.stock
       }
       this.$store.dispatch('addProduct', data)
+        .then(() => {
+          swal('Success add Product')
+          this.$router.push('/')
+        })
+        .catch((err) => {
+          swal('error ' + err.response.data.errors)
+          // this.$router.push('/create')
+        })
+      this.name = ''
+      this.image_url = ''
+      this.price = ''
+      this.stock = ''
     }
   }
 }

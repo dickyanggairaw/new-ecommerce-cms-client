@@ -1,19 +1,15 @@
 <template>
   <div class="home">
     <div class="container">
-      <button type="submit" class="btn btn-dark w-10" @click="addProduct">Add Product</button>
+      <button type="submit" class="btn btn-dark w-10" @click.prevent="addProduct" v-if="isLoginUser">Add Product</button>
     </div><br>
-    <div class="container">
-      <div class="row" v-for="product in products" :key="product.id">
-        <ProductTask :title="product.name" :image_url="product.image_url" :price="product.price" :stock="product.stock" :id="product.id" />
-      </div>
-    </div>
+    <Product v-if="isLoginUser"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import ProductTask from '../components/ProductTask'
+import Product from '../components/Product'
 
 export default {
   data () {
@@ -21,23 +17,23 @@ export default {
     }
   },
   components: {
-    ProductTask
+    Product
   },
   methods: {
-    fetchAll () {
-      this.$store.dispatch('fetchProduct')
-    },
     addProduct () {
       this.$router.push('/create')
+    },
+    isLogin () {
+      this.$store.dispatch('isLogin')
     }
   },
   computed: {
-    products () {
-      return this.$store.state.products
+    isLoginUser () {
+      return this.$store.state.isLogin
     }
   },
   created () {
-    this.fetchAll()
+    this.isLogin()
   }
 }
 </script>

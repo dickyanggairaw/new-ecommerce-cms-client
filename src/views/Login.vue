@@ -20,7 +20,7 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-dark w-20" @click="login">Login</button>
+        <button type="submit" class="btn btn-dark w-20" @click.prevent="login">Login</button>
       </form>
   </div>
 </template>
@@ -39,7 +39,8 @@ export default {
         email: this.email,
         password: this.password
       })
-      this.$router.push('/')
+      this.email = ''
+      this.password = ''
     }
   }
 }
